@@ -1,0 +1,11 @@
+{
+  "name": "@venus/web",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "echo building web",
+    "lint": "echo linting web",
+    "test": "echo testing web",
+    "format": "echo formatting web"
+  }
+}

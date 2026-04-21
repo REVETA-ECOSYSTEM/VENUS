@@ -1,0 +1,11 @@
+{
+  "name": "@venus/landmark",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "echo building landmark",
+    "lint": "echo linting landmark",
+    "test": "echo testing landmark",
+    "format": "echo formatting landmark"
+  }
+}

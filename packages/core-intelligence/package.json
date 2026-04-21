@@ -1,0 +1,11 @@
+{
+  "name": "@venus/core-intelligence",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "echo building core-intelligence",
+    "lint": "echo linting core-intelligence",
+    "test": "echo testing core-intelligence",
+    "format": "echo formatting core-intelligence"
+  }
+}

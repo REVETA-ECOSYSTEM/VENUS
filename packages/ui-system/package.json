@@ -1,0 +1,11 @@
+{
+  "name": "@venus/ui-system",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "echo building ui-system",
+    "lint": "echo linting ui-system",
+    "test": "echo testing ui-system",
+    "format": "echo formatting ui-system"
+  }
+}

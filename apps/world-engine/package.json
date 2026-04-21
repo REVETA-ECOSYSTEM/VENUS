@@ -1,0 +1,11 @@
+{
+  "name": "@venus/world-engine",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "echo building world-engine",
+    "lint": "echo linting world-engine",
+    "test": "echo testing world-engine",
+    "format": "echo formatting world-engine"
+  }
+}
