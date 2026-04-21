@@ -1,0 +1,11 @@
+{
+  "name": "@venus/agent-sdk",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "echo building agent-sdk",
+    "lint": "echo linting agent-sdk",
+    "test": "echo testing agent-sdk",
+    "format": "echo formatting agent-sdk"
+  }
+}

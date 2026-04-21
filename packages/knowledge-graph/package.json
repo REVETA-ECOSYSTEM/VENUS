@@ -1,0 +1,11 @@
+{
+  "name": "@venus/knowledge-graph",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "echo building knowledge-graph",
+    "lint": "echo linting knowledge-graph",
+    "test": "echo testing knowledge-graph",
+    "format": "echo formatting knowledge-graph"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "@venus/data-access",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "echo building data-access",
+    "lint": "echo linting data-access",
+    "test": "echo testing data-access",
+    "format": "echo formatting data-access"
+  }
+}

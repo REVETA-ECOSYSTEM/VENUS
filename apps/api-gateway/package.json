@@ -1,0 +1,11 @@
+{
+  "name": "@venus/api-gateway",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "echo building api-gateway",
+    "lint": "echo linting api-gateway",
+    "test": "echo testing api-gateway",
+    "format": "echo formatting api-gateway"
+  }
+}

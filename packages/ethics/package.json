@@ -1,0 +1,11 @@
+{
+  "name": "@venus/ethics",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "echo building ethics",
+    "lint": "echo linting ethics",
+    "test": "echo testing ethics",
+    "format": "echo formatting ethics"
+  }
+}

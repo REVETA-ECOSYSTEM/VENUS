@@ -1,0 +1,11 @@
+{
+  "name": "@venus/xperia",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "echo building xperia",
+    "lint": "echo linting xperia",
+    "test": "echo testing xperia",
+    "format": "echo formatting xperia"
+  }
+}

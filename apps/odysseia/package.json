@@ -1,0 +1,11 @@
+{
+  "name": "@venus/odysseia",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "echo building odysseia",
+    "lint": "echo linting odysseia",
+    "test": "echo testing odysseia",
+    "format": "echo formatting odysseia"
+  }
+}
