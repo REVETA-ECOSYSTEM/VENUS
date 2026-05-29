@@ -42,3 +42,13 @@ The repository now includes a first executable Landmark trust-score vertical sli
 - `packages/ethics`: blocking ethics/compliance gate for explainability, fairness, and consent.
 - `apps/landmark`: Landmark trust-score engine with risk findings, audit metadata, and human-review routing.
 - `apps/api-gateway`: minimal HTTP/router entrypoint for health checks and Landmark analysis.
+
+
+## Planning Docs
+
+- [System architecture](docs/system-architecture.md)
+- [API contract v1](docs/api-contract-v1.yaml)
+- [Database schema v1](docs/database-schema-v1.md)
+- [Execution plan v1](docs/execution-plan-v1.md)
+- [System analysis and next steps](docs/system-analysis-next-steps.md)
+- [ADR 0001: Modular Monolith First](docs/adr/0001-modular-monolith-first.md)
