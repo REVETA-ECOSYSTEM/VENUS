@@ -1,0 +1,19 @@
+{
+  "name": "venus",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Venus AI monorepo",
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "format": "turbo run format"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "turbo": "^2.0.0",
+    "typescript": "^5.7.2"
+  }
+}

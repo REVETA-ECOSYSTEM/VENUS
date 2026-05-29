@@ -1,0 +1,298 @@
+openapi: 3.1.0
+info:
+  title: VENUS API Contract v1
+  version: 1.0.0
+  description: |
+    Contract-first API for Venus ecosystem. Every decision response contains
+    confidence, risk, explainability, and audit metadata.
+servers:
+  - url: https://api.venus.ai/v1
+security:
+  - bearerAuth: []
+tags:
+  - name: Health
+  - name: Auth
+  - name: Landmark
+  - name: Knowledge
+paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Service health check
+      responses:
+        '200':
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Auth token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+  /landmark/analyze-property:
+    post:
+      tags: [Landmark]
+      summary: Analyze a property dossier and produce trust score
+      operationId: analyzeProperty
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyAnalysisRequest'
+      responses:
+        '200':
+          description: Synchronous MVP trust score decision output
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrustScoreResponse'
+        '202':
+          description: Analysis accepted for async processing in production mode
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncJobAccepted'
+  /landmark/trust-score/{analysisId}:
+    get:
+      tags: [Landmark]
+      summary: Get trust score output
+      parameters:
+        - in: path
+          name: analysisId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Trust score decision output
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrustScoreResponse'
+  /landmark/risk-report/{analysisId}:
+    get:
+      tags: [Landmark]
+      summary: Get detailed risk report
+      parameters:
+        - in: path
+          name: analysisId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Risk report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskReportResponse'
+  /knowledge/query:
+    post:
+      tags: [Knowledge]
+      summary: Query policy and graph intelligence
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query:
+                  type: string
+                locale:
+                  type: string
+      responses:
+        '200':
+          description: Knowledge response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  answer:
+                    type: string
+                  references:
+                    type: array
+                    items:
+                      type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    AuthToken:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        expiresIn:
+          type: integer
+          example: 3600
+    AsyncJobAccepted:
+      type: object
+      required: [jobId, status]
+      properties:
+        jobId:
+          type: string
+        status:
+          type: string
+          enum: [queued, processing]
+    PropertyAnalysisRequest:
+      type: object
+      required: [propertyRef, claimant, documents]
+      properties:
+        propertyRef:
+          type: string
+        claimant:
+          $ref: '#/components/schemas/Party'
+        documents:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/DocumentInput'
+    Party:
+      type: object
+      required: [fullName]
+      properties:
+        fullName:
+          type: string
+        nationalId:
+          type: string
+        phone:
+          type: string
+    DocumentInput:
+      type: object
+      required: [documentType, storageUrl]
+      properties:
+        documentType:
+          type: string
+          enum: [title_deed, survey_plan, registry_extract, tax_receipt, other]
+        storageUrl:
+          type: string
+          format: uri
+    TrustScoreResponse:
+      type: object
+      required:
+        - analysisId
+        - trustScore
+        - confidence
+        - riskLevel
+        - explanation
+        - audit
+      properties:
+        analysisId:
+          type: string
+        trustScore:
+          type: number
+          minimum: 0
+          maximum: 10
+        confidence:
+          type: string
+          enum: [low, medium, high]
+        riskLevel:
+          type: string
+          enum: [low, medium, high]
+        explanation:
+          type: string
+        factors:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrustFactor'
+        ethics:
+          $ref: '#/components/schemas/EthicsGateResult'
+        audit:
+          $ref: '#/components/schemas/AuditMetadata'
+    TrustFactor:
+      type: object
+      properties:
+        name:
+          type: string
+        weight:
+          type: number
+        score:
+          type: number
+        note:
+          type: string
+    RiskReportResponse:
+      type: object
+      properties:
+        analysisId:
+          type: string
+        findings:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskFinding'
+        recommendedAction:
+          type: string
+        audit:
+          $ref: '#/components/schemas/AuditMetadata'
+    RiskFinding:
+      type: object
+      properties:
+        code:
+          type: string
+        severity:
+          type: string
+          enum: [low, medium, high]
+        detail:
+          type: string
+        evidence:
+          type: array
+          items:
+            type: string
+    EthicsGateResult:
+      type: object
+      required: [safe, fair, compliant]
+      properties:
+        safe:
+          type: boolean
+        fair:
+          type: boolean
+        compliant:
+          type: boolean
+        blocked:
+          type: boolean
+        notes:
+          type: array
+          items:
+            type: string
+    AuditMetadata:
+      type: object
+      required: [requestId, decisionVersion, timestamp]
+      properties:
+        requestId:
+          type: string
+        decisionVersion:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
